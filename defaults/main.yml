@@ -1,0 +1,11 @@
+---
+# defaults file for ansible-role-win-prometheuswindowsexporter
+
+# @var win_prometheuswindowsexporter_package_params:description: package parameters passed to the installer
+win_prometheuswindowsexporter_package_params: "/EnabledCollectors:cpu,cs,logical_disk,memory,net,os,service,system,tcp"
+
+# @var win_prometheuswindowsexporter_allow_firewall:description: Allow port in windows firewall
+win_prometheuswindowsexporter_allow_firewall: true
+
+# @var win_prometheuswindowsexporter_firewall_port:description: TCP port to allow in windows firewall
+win_prometheuswindowsexporter_firewall_port: 9182

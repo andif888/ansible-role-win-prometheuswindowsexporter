@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-role-win-prometheuswindowsexporter
+- name: Install Prometheus Windows exporter
+  chocolatey.chocolatey.win_chocolatey:
+    name: prometheus-windows-exporter.install
+    package_params: "{{ win_prometheuswindowsexporter_package_params }}"
+    state: present
+
+- name: Allow firewall port {{ win_prometheuswindowsexporter_firewall_port }}
+  community.windows.win_firewall_rule:
+    name: Prometheus WMI Exporter
+    localport: "{{ win_prometheuswindowsexporter_firewall_port }}"
+    action: allow
+    direction: in
+    protocol: tcp
+    state: present
+    enabled: yes
+  when: win_prometheuswindowsexporter_allow_firewall
+
+- name: Ensure Service is started
+  ansible.windows.win_service:
+    name: windows_exporter
+    start_mode: auto
+    state: started
+  tags: win-prometheuswindowsexporter-autostart
